@@ -101484,10 +101484,10 @@ MonoBehaviour:
   aimCam: {fileID: 2070925442819007655}
   aimImage: {fileID: 832689596}
   aimObj: {fileID: 1755036449}
-  aimObjDis: 10
+  aimObjDis: 20
   targetLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 9
 --- !u!4 &6983258930134212224
 Transform:
   m_ObjectHideFlags: 0

@@ -15,17 +15,17 @@ namespace StarterAssets
     public class ThirdPersonController : MonoBehaviour
     {
         [Header("Player")]
-        [Tooltip("Move speed of the character in m/s")]
+        [Tooltip("Move speed of the character in m/s (걷기 속도)")]
         public float MoveSpeed = 2.0f;
 
-        [Tooltip("Sprint speed of the character in m/s")]
+        [Tooltip("Sprint speed of the character in m/s(뛰기 속도)")]
         public float SprintSpeed = 5.335f;
 
-        [Tooltip("How fast the character turns to face movement direction")]
+        [Tooltip("How fast the character turns to face movement direction(이동방향 회전 속도)")]
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
 
-        [Tooltip("Acceleration and deceleration")]
+        [Tooltip("Acceleration and deceleration(가속, 감속)")]
         public float SpeedChangeRate = 10.0f;
 
         public AudioClip LandingAudioClip;

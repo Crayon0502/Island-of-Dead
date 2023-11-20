@@ -100618,6 +100618,7 @@ MonoBehaviour:
   BottomClamp: -20
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  isAimMove: 0
 --- !u!143 &4416926083172525715
 CharacterController:
   m_ObjectHideFlags: 0

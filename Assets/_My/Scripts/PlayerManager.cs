@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     private StarterAssetsInputs input;
+    private ThirdPersonController controller;
 
     [Header("Aim")]
     [SerializeField]
@@ -21,6 +22,7 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         input = GetComponent<StarterAssetsInputs>();
+        controller = GetComponent<ThirdPersonController>();
     }
 
     private void Update()
@@ -32,8 +34,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (input.aim)
         {
-            aimCam.gameObject.SetActive(true);
-            aimImage.SetActive(true);
+            AimControll(true);
 
             Vector3 targetPosition = Vector3.zero;
             Transform camTransform = Camera.main.transform;
@@ -57,8 +58,14 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            aimCam.gameObject.SetActive(false);
-            aimImage.SetActive(false);
+            AimControll(false);
         }
+    }
+
+    private void AimControll(bool isCheck)
+    {
+        aimCam.gameObject.SetActive(isCheck);
+        aimImage.SetActive(isCheck);
+        controller.isAimMove = isCheck;
     }
 }

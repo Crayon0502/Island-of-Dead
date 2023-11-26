@@ -13,8 +13,8 @@ public class PlayerManager : MonoBehaviour
     private CinemachineVirtualCamera aimCam;
     [SerializeField]
     private GameObject aimImage;
-    [SerializeField]
-    private GameObject aimObj;
+    //[SerializeField]
+    //private GameObject aimObj;
     [SerializeField]
     private float aimObjDis = 10f;
     [SerializeField]
@@ -64,12 +64,12 @@ public class PlayerManager : MonoBehaviour
             if (Physics.Raycast(camTransform.position, camTransform.forward, out hit, Mathf.Infinity, targetLayer))
             {
                 targetPosition = hit.point;
-                aimObj.transform.position = hit.point;
+                //aimObj.transform.position = hit.point;
             }
             else
             {
                 targetPosition = camTransform.position + camTransform.forward * aimObjDis;
-                aimObj.transform.position = camTransform.position + camTransform.forward * aimObjDis;
+                //aimObj.transform.position = camTransform.position + camTransform.forward * aimObjDis;
             }
 
             Vector3 targetAim = targetPosition;

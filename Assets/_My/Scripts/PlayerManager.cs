@@ -88,6 +88,7 @@ public class PlayerManager : MonoBehaviour
             if (input.shoot)
             {
                 anim.SetBool("Shoot", true);
+                GameManger.instance.Shooting(targetPosition);
             }
             else
             {
@@ -120,5 +121,10 @@ public class PlayerManager : MonoBehaviour
     private void SetRigWeight(float weight)
     {
         aimRig.weight = weight;
+    }
+
+    public void ReroadWeaponClip()
+    {
+        GameManger.instance.ReloadClip();
     }
 }

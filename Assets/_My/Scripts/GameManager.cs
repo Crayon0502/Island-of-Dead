@@ -51,7 +51,7 @@ public class GameManger : MonoBehaviour
         bulletText.text = curruntBullet + " / " + maxBullet;
     }
 
-    public void Shooting(Vector3 targetPosition)
+    public void Shooting(Vector3 targetPosition, Enemy enemy)
     {
         curruntShootDelay += Time.deltaTime;
 
@@ -61,21 +61,44 @@ public class GameManger : MonoBehaviour
         curruntBullet -= 1;
         curruntShootDelay = 0;
 
-        Instantiate(weaponFlashFX, bulletPoint);
-        Instantiate(bulletCaseFX, bulletCasePoint);
-
         Vector3 aim = (targetPosition - bulletPoint.position).normalized;
-        Instantiate(bulletObj, bulletPoint.position, Quaternion.LookRotation(aim, Vector3.up));
+
+        //Instantiate(weaponFlashFX,bulletPoint);
+        GameObject flashFX = PoolManager.instance.ActivateObj(1);
+        SetObjPosition(flashFX, bulletPoint);
+        flashFX.transform.rotation = Quaternion.LookRotation(aim, Vector3.up);
+
+        //Instantiate(bulletCaseFX, bulletCasePoint);
+        GameObject caseFX = PoolManager.instance.ActivateObj(2);
+        SetObjPosition(caseFX, bulletCasePoint);
+
+        //Instantiate(bulletObj, bulletPoint.position, Quaternion.LookRotation(aim,Vector3.up));
+
+        GameObject prefabToSpawn = PoolManager.instance.ActivateObj(0);
+        SetObjPosition(prefabToSpawn, bulletPoint);
+        prefabToSpawn.transform.rotation = Quaternion.LookRotation(aim, Vector3.up);
+
+        //if (enemy != null && enemy.enemyCurruntHP > 0)
+        //{
+        //    enemy.enemyCurruntHP -= 1;
+        //    Debug.Log("enemy HP : " + enemy.enemyCurruntHP);
+        //}
     }
 
     public void ReloadClip()
     {
-        Instantiate(weaponClipFX, weaponClipPoint);
+        GameObject clipFX = PoolManager.instance.ActivateObj(3);
+        SetObjPosition(clipFX, weaponClipPoint);
         InitBullet();
     }
 
     private void InitBullet()
     {
         curruntBullet = maxBullet;
+    }
+
+    private void SetObjPosition(GameObject obj, Transform targetTransform)
+    {
+        obj.transform.position = targetTransform.position;
     }
 }

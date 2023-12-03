@@ -66,26 +66,18 @@ public class GameManger : MonoBehaviour
 
         Vector3 aim = (targetPosition - bulletPoint.position).normalized;
 
-        //Instantiate(weaponFlashFX,bulletPoint);
         GameObject flashFX = PoolManager.instance.ActivateObj(1);
         SetObjPosition(flashFX, bulletPoint);
         flashFX.transform.rotation = Quaternion.LookRotation(aim, Vector3.up);
 
-        //Instantiate(bulletCaseFX, bulletCasePoint);
         GameObject caseFX = PoolManager.instance.ActivateObj(2);
         SetObjPosition(caseFX, bulletCasePoint);
-
-        //Instantiate(bulletObj, bulletPoint.position, Quaternion.LookRotation(aim,Vector3.up));
 
         GameObject prefabToSpawn = PoolManager.instance.ActivateObj(0);
         SetObjPosition(prefabToSpawn, bulletPoint);
         prefabToSpawn.transform.rotation = Quaternion.LookRotation(aim, Vector3.up);
 
-        //if (enemy != null && enemy.enemyCurruntHP > 0)
-        //{
-        //    enemy.enemyCurruntHP -= 1;
-        //    Debug.Log("enemy HP : " + enemy.enemyCurruntHP);
-        //}
+
     }
 
     public void ReloadClip()

@@ -5,9 +5,11 @@ using UnityEngine.Animations.Rigging;
 
 public class PlayerManager : MonoBehaviour
 {
+    public static PlayerManager Instance;
+
     private StarterAssetsInputs input;
     private ThirdPersonController controller;
-    private Animator anim;
+    public Animator anim;
 
     [Header("Aim")]
     [SerializeField]
@@ -94,7 +96,6 @@ public class PlayerManager : MonoBehaviour
             Vector3 aimDir = (targetAim - transform.position).normalized;
             transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 50f);
             SetRigWeight(1);
-            //transform.forward = Vector3.Lerp(transform.forward, new Vector3(aimDir.x, transform.forward.y, aimDir.z), Time.deltaTime * 180f);
 
             if (input.shoot)
             {

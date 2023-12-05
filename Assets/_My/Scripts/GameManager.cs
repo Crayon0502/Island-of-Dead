@@ -76,8 +76,6 @@ public class GameManger : MonoBehaviour
         GameObject prefabToSpawn = PoolManager.instance.ActivateObj(0);
         SetObjPosition(prefabToSpawn, bulletPoint);
         prefabToSpawn.transform.rotation = Quaternion.LookRotation(aim, Vector3.up);
-
-
     }
 
     public void ReloadClip()

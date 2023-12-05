@@ -5,11 +5,10 @@ using UnityEngine.Animations.Rigging;
 
 public class PlayerManager : MonoBehaviour
 {
-    public static PlayerManager Instance;
-
     private StarterAssetsInputs input;
     private ThirdPersonController controller;
-    public Animator anim;
+    private Animator anim;
+    public MultiAimConstraint multiAimConstraint;
 
     [Header("Aim")]
     [SerializeField]
@@ -35,6 +34,7 @@ public class PlayerManager : MonoBehaviour
     private AudioSource weaponSound;
 
     private Enemy enemy;
+    private bool isEnemyNear = false;
 
     void Start()
     {
@@ -42,6 +42,8 @@ public class PlayerManager : MonoBehaviour
         controller = GetComponent<ThirdPersonController>();
         anim = GetComponent<Animator>();
         weaponSound = GetComponent<AudioSource>();
+        multiAimConstraint = GetComponent<MultiAimConstraint>();
+
     }
 
     private void Update()
@@ -84,6 +86,7 @@ public class PlayerManager : MonoBehaviour
                 aimObj.transform.position = hit.point;
 
                 enemy = hit.collider.gameObject.GetComponent<Enemy>();
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
             }
             else
             {
@@ -95,7 +98,11 @@ public class PlayerManager : MonoBehaviour
             targetAim.y = transform.position.y;
             Vector3 aimDir = (targetAim - transform.position).normalized;
             transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 50f);
-            SetRigWeight(1);
+
+            if (isEnemyNear)
+                SetRigWeight(0);
+            else
+                SetRigWeight(1);
 
             if (input.shoot)
             {
@@ -150,5 +157,21 @@ public class PlayerManager : MonoBehaviour
     {
         weaponSound.clip = sound;
         weaponSound.Play();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Enemy")
+        {
+            isEnemyNear = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Enemy")
+        {
+            isEnemyNear = false;
+        }
     }
 }

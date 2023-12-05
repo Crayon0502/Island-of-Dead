@@ -16,6 +16,7 @@ public class BulletManager : MonoBehaviour
         bulletRigibody = GetComponent<Rigidbody>();
     }
 
+    // Update is called once per frame
     void Update()
     {
         destroyTime -= Time.deltaTime;
@@ -35,12 +36,17 @@ public class BulletManager : MonoBehaviour
 
     private void DestroyBullet()
     {
+        //Destroy(gameObject);
         gameObject.SetActive(false);
         destroyTime = 3;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        DestroyBullet();
+        if (other.CompareTag("Enemy"))
+        {
+            other.gameObject.GetComponent<Enemy>().enemyCurruntHP -= 1;
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -11,9 +11,11 @@ public class PoolManager : MonoBehaviour
     private int poolSize = 1;
     private List<GameObject>[] objPools;
 
+    // Start is called before the first frame update
     void Start()
     {
         instance = this;
+
         InitObjPool();
     }
 

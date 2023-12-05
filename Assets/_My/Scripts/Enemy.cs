@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    private int enemyMaxHP = 100;
+    private int enemyMaxHP = 10;
     public int enemyCurruntHP = 0;
 
     void Start()

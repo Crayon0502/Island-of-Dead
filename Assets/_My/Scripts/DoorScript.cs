@@ -6,8 +6,8 @@ public class DoorScript : MonoBehaviour
     public float openAngle = 90f;
     public float closeAngle = 0f;
     public float smooth = 2f;
-    public AudioClip openSound; 
-    public AudioClip closeSound; 
+    public AudioClip openSound;
+    public AudioClip closeSound;
     private AudioSource audioSource;
 
     void Start()

@@ -174,4 +174,5 @@ public class PlayerManager : MonoBehaviour
             isEnemyNear = false;
         }
     }
+
 }

@@ -8,6 +8,8 @@ TagManager:
   - Door
   - Enemy
   - Door2
+  - EnemyAtk
+  - Water
   layers:
   - Default
   - TransparentFX

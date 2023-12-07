@@ -8,9 +8,15 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private Slider HpBar;
+    public float zombieAtkDamage = 7f;
 
+    [SerializeField]
+    private SphereCollider meleeArea;
+
+    [SerializeField]
     private float enemyMaxHP = 10;
     public float enemyCurruntHP = 0;
+
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -26,11 +32,11 @@ public class Enemy : MonoBehaviour
         InitEnemyHP();
     }
 
-    void Update() 
+    void Update()
     {
         HpBar.value = enemyCurruntHP / enemyMaxHP;
 
-        if(enemyCurruntHP <= 0)
+        if (enemyCurruntHP <= 0)
         {
             StartCoroutine(EnemyDie());
             return;
@@ -68,12 +74,24 @@ public class Enemy : MonoBehaviour
         enemyCurruntHP = enemyMaxHP;
     }
 
+    public void ZombieAttack(int zombieAttack)
+    {
+        if (zombieAttack == 1)
+        {
+            meleeArea.enabled = true;
+        }      
+        else
+        {
+           meleeArea.enabled = false;
+        }        
+    }
+
     IEnumerator EnemyDie()
     {
         agent.speed = 0;
         animator.SetTrigger("Dead");
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3.5f);
         Destroy(gameObject);
     }
 }

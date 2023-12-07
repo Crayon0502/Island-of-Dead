@@ -1,14 +1,20 @@
 using UnityEngine;
-using UnityEngine.Animations;
+using StarterAssets;
 
 public class InteractScript : MonoBehaviour
 {
+    private StarterAssetsInputs playerInput;
     public float interactDistance = 5f;
     public DoorScript door;
 
+    void Start()
+    {
+        playerInput = GetComponentInParent<StarterAssetsInputs>();
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (playerInput.interaction)
         {
             TryInteract();
         }
@@ -16,6 +22,7 @@ public class InteractScript : MonoBehaviour
 
     void TryInteract()
     {
+        playerInput.interaction = false;
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
 

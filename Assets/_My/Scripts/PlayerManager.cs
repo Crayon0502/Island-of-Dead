@@ -2,6 +2,7 @@ using Cinemachine;
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -9,6 +10,17 @@ public class PlayerManager : MonoBehaviour
     private ThirdPersonController controller;
     private Animator anim;
     public MultiAimConstraint multiAimConstraint;
+
+    [Header("PlayerState")]
+    [SerializeField]
+    private Slider hpBar;
+    [SerializeField]
+    private Slider pollutionBar;
+    [SerializeField]
+    private float playerMaxHP = 100;
+    public float playerCurrentHP = 0;
+    private float playerMaxInfection = 100;
+    public float playerCurrentInfection = 0;
 
     [Header("Aim")]
     [SerializeField]
@@ -34,7 +46,9 @@ public class PlayerManager : MonoBehaviour
     private AudioSource weaponSound;
 
     private Enemy enemy;
-    private bool isEnemyNear = false;
+    private float infectionSpeed = 1f;
+    private bool infection = false;
+    private bool waterInfection = false;
 
     void Start()
     {
@@ -44,16 +58,25 @@ public class PlayerManager : MonoBehaviour
         weaponSound = GetComponent<AudioSource>();
         multiAimConstraint = GetComponent<MultiAimConstraint>();
 
+        InitPlayerHP();
     }
 
     private void Update()
     {
         AimCheck();
+        InfectionIncrease();
+        hpBar.value = playerCurrentHP / playerMaxHP;
+        pollutionBar.value = playerCurrentInfection / playerMaxInfection;
+    }
+
+    private void InitPlayerHP()
+    {
+        playerCurrentHP = playerMaxHP;
     }
 
     private void AimCheck()
     {
-        if(input.reload)
+        if (input.reload)
         {
             input.reload = false;
 
@@ -74,6 +97,7 @@ public class PlayerManager : MonoBehaviour
         {
             AimControll(true);
 
+            SetRigWeight(1);
             anim.SetLayerWeight(1, 1);
 
             Vector3 targetPosition = Vector3.zero;
@@ -99,15 +123,10 @@ public class PlayerManager : MonoBehaviour
             Vector3 aimDir = (targetAim - transform.position).normalized;
             transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 50f);
 
-            if (isEnemyNear)
-                SetRigWeight(0);
-            else
-                SetRigWeight(1);
-
             if (input.shoot)
             {
                 anim.SetBool("Shoot", true);
-                GameManger.instance.Shooting(targetPosition, enemy,weaponSound, shootingSound);
+                GameManger.instance.Shooting(targetPosition, enemy, weaponSound, shootingSound);
             }
             else
             {
@@ -133,7 +152,7 @@ public class PlayerManager : MonoBehaviour
     public void Reload()
     {
         controller.isReload = false;
-        SetRigWeight(1);
+        SetRigWeight(0);
         anim.SetLayerWeight(1, 0);
     }
 
@@ -159,20 +178,36 @@ public class PlayerManager : MonoBehaviour
         weaponSound.Play();
     }
 
+    private void InfectionIncrease()
+    {
+        if (infection)
+            playerCurrentInfection += Time.deltaTime * 0.5f;
+
+        if (waterInfection)
+            playerCurrentInfection += Time.deltaTime * infectionSpeed;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy")
+        if (other.CompareTag("EnemyAtk"))
         {
-            isEnemyNear = true;
+            playerCurrentHP -= other.gameObject.GetComponentInParent<Enemy>().zombieAtkDamage;
+            playerCurrentInfection += 2;
+            infection = true;
+        }
+
+        if (other.CompareTag("Water"))
+        {
+            waterInfection = true;
+            infectionSpeed = 0.6f;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.CompareTag("Water"))
         {
-            isEnemyNear = false;
+            waterInfection = false;
         }
     }
-
 }

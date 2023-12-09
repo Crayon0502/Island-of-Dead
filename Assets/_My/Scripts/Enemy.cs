@@ -17,6 +17,11 @@ public class Enemy : MonoBehaviour
     private float enemyMaxHP = 10;
     public float enemyCurruntHP = 0;
 
+    [SerializeField]
+    private AudioClip[] zombieAtkSound;
+    private AudioSource atkSound;
+
+    public GameObject hitEffectPrefab;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -28,6 +33,7 @@ public class Enemy : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        atkSound = GetComponent<AudioSource>();
         targetPlayer = GameObject.FindWithTag("Player");
         InitEnemyHP();
     }
@@ -61,7 +67,6 @@ public class Enemy : MonoBehaviour
             else
             {
                 animator.SetFloat("MoveSpeed", agent.velocity.magnitude);
-
             }
 
             targetDealay = 0;
@@ -79,11 +84,17 @@ public class Enemy : MonoBehaviour
         if (zombieAttack == 1)
         {
             meleeArea.enabled = true;
-        }      
+        }
         else
         {
-           meleeArea.enabled = false;
-        }        
+            meleeArea.enabled = false;
+        }
+    }
+
+    public void ZombieAtkSound()
+    {
+        atkSound.clip = zombieAtkSound[Random.Range(0, 3)];
+        atkSound.Play();
     }
 
     IEnumerator EnemyDie()
@@ -93,5 +104,13 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(3.5f);
         Destroy(gameObject);
+    }
+
+    public void PlayHitEffect(Vector3 hitPoint)
+    {
+        if (hitEffectPrefab != null)
+        {
+            Instantiate(hitEffectPrefab, hitPoint, Quaternion.identity);
+        }
     }
 }

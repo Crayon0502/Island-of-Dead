@@ -45,6 +45,7 @@ public class PlayerManager : MonoBehaviour
     private AudioClip[] reloadSound;
     private AudioSource weaponSound;
 
+    private GameManger gameManager;
     private Enemy enemy;
     private float infectionSpeed = 1f;
     private bool infection = false;
@@ -57,6 +58,7 @@ public class PlayerManager : MonoBehaviour
         anim = GetComponent<Animator>();
         weaponSound = GetComponent<AudioSource>();
         multiAimConstraint = GetComponent<MultiAimConstraint>();
+        gameManager = FindObjectOfType<GameManger>();
 
         InitPlayerHP();
     }
@@ -192,6 +194,7 @@ public class PlayerManager : MonoBehaviour
         if (other.CompareTag("EnemyAtk"))
         {
             playerCurrentHP -= other.gameObject.GetComponentInParent<Enemy>().zombieAtkDamage;
+            StartCoroutine(gameManager.ShowBloodScreen());
             playerCurrentInfection += 2;
             infection = true;
         }

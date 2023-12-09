@@ -21,7 +21,6 @@ public class GameManger : MonoBehaviour
     private int maxBullet = 30;
     private int curruntBullet = 0;
 
-
     [Header("Weapon FX")]
     [SerializeField]
     private GameObject weaponFlashFX;
@@ -34,6 +33,14 @@ public class GameManger : MonoBehaviour
     [SerializeField]
     private GameObject weaponClipFX;
 
+    [Header("Enemy")]
+    [SerializeField]
+    private GameObject[] enemy;
+    [SerializeField]
+    private GameObject[] spawnPoint;
+
+    [Header("UI")]
+    public Image bloodScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +50,8 @@ public class GameManger : MonoBehaviour
         curruntShootDelay = 0;
 
         InitBullet();
+
+        StartCoroutine(EnemySpawn());
     }
 
     // Update is called once per frame
@@ -93,5 +102,21 @@ public class GameManger : MonoBehaviour
     private void SetObjPosition(GameObject obj, Transform targetTransform)
     {
         obj.transform.position = targetTransform.position;
+    }
+
+    public IEnumerator ShowBloodScreen()
+    {
+        bloodScreen.color = new Color(0.255f, 0, 0, UnityEngine.Random.Range(0.9f, 1f));
+        yield return new WaitForSeconds(0.15f);
+        bloodScreen.color = Color.clear;
+    }
+
+    IEnumerator EnemySpawn()
+    {
+        Instantiate(enemy[Random.Range(0,enemy.Length)], spawnPoint[Random.Range(0, spawnPoint.Length)].transform.position, Quaternion.identity);
+
+        yield return new WaitForSeconds(1.5f);
+
+        StartCoroutine(EnemySpawn());
     }
 }

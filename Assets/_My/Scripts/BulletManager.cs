@@ -10,7 +10,6 @@ public class BulletManager : MonoBehaviour
     private float moveSpeed = 10f;
     private float destroyTime = 3f;
 
-
     void Start()
     {
         bulletRigibody = GetComponent<Rigidbody>();
@@ -46,7 +45,10 @@ public class BulletManager : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             other.gameObject.GetComponent<Enemy>().enemyCurruntHP -= 1;
-            gameObject.SetActive(false);
+            Vector3 hitPoint = other.ClosestPointOnBounds(transform.position);
+            other.gameObject.GetComponent<Enemy>().PlayHitEffect(hitPoint);
         }
+
+        gameObject.SetActive(false);
     }
 }

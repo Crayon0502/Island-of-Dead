@@ -21,6 +21,13 @@ public class Enemy : MonoBehaviour
     private AudioClip[] zombieAtkSound;
     private AudioSource atkSound;
 
+    [SerializeField]
+    private float trackingRange = 10f;
+
+    [SerializeField]
+    private float wanderingTime = 2f; // 랜덤하게 걷는 시간
+    private float currentWanderingTime = 0f;
+
     public GameObject hitEffectPrefab;
 
     private NavMeshAgent agent;
@@ -48,30 +55,66 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        if (targetPlayer != null)
+        if (targetPlayer != null && Vector3.Distance(transform.position, targetPlayer.transform.position) <= trackingRange)
         {
-            float maxDealay = 0.5f;
-            targetDealay += Time.deltaTime;
-
-            if (targetDealay < maxDealay)
-                return;
-
-            agent.destination = targetPlayer.transform.position;
-            transform.LookAt(targetPlayer.transform.position);
-
-            bool isRange = Vector3.Distance(transform.position, targetPlayer.transform.position) <= agent.stoppingDistance;
-            if (isRange)
-            {
-                animator.SetTrigger("Attack");
-            }
-            else
-            {
-                animator.SetFloat("MoveSpeed", agent.velocity.magnitude);
-            }
-
-            targetDealay = 0;
+            Chase(); // 플레이어 추적
+        }
+        else
+        {
+            Wander(); // 배회
         }
 
+    }
+
+    private void Chase()
+    {
+        float maxDealay = 0.5f;
+        targetDealay += Time.deltaTime;
+
+        if (targetDealay < maxDealay)
+            return;
+
+        agent.destination = targetPlayer.transform.position;
+        transform.LookAt(targetPlayer.transform.position);
+
+        bool isRange = Vector3.Distance(transform.position, targetPlayer.transform.position) <= agent.stoppingDistance;
+        if (isRange)
+        {
+            animator.SetTrigger("Attack");
+        }
+        else
+        {
+            animator.SetFloat("MoveSpeed", agent.velocity.magnitude);
+        }
+
+        targetDealay = 0;
+    }
+
+    private void Wander()
+    {
+        currentWanderingTime += Time.deltaTime;
+
+        if (currentWanderingTime >= wanderingTime)
+        {
+            // 랜덤하게 방향 설정
+            Vector3 randomDirection = Random.insideUnitSphere * 10f;
+            randomDirection += transform.position;
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomDirection, out hit, 10f, NavMesh.AllAreas);
+            Vector3 finalPosition = hit.position;
+
+            // 이동 목표 설정
+            agent.destination = finalPosition;
+
+            // 애니메이션 및 타이머 초기화
+            animator.SetFloat("MoveSpeed", agent.velocity.magnitude);
+            currentWanderingTime = 0f;
+        }
+        else
+        {
+            // 이동 중인 경우 애니메이션 재생
+            animator.SetFloat("MoveSpeed", agent.velocity.magnitude);
+        }
     }
 
     private void InitEnemyHP()

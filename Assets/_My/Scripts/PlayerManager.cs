@@ -112,7 +112,7 @@ public class PlayerManager : MonoBehaviour
                 aimObj.transform.position = hit.point;
 
                 enemy = hit.collider.gameObject.GetComponent<Enemy>();
-                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                //float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
             }
             else
             {

@@ -84,6 +84,7 @@ public class Enemy : MonoBehaviour
         if (zombieAttack == 1)
         {
             meleeArea.enabled = true;
+            ZombieAtkSound();
         }
         else
         {

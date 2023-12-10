@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void ZombieAtkSound()
+    private void ZombieAtkSound()
     {
         atkSound.clip = zombieAtkSound[Random.Range(0, 3)];
         atkSound.Play();

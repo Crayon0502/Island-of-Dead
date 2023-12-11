@@ -863,9 +863,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.45
-  m_Height: 2.07
+  m_Height: 2.2082632
   m_Direction: 1
-  m_Center: {x: -0.010108947, y: 1.0304325, z: 0}
+  m_Center: {x: -0.010108947, y: 0.96129984, z: 0}
 --- !u!114 &9068405804619661193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -881,12 +881,14 @@ MonoBehaviour:
   HpBar: {fileID: 6242908955529462415}
   zombieAtkDamage: 7
   meleeArea: {fileID: 1681142108926200543}
-  enemyMaxHP: 10
+  enemyMaxHP: 6
   enemyCurruntHP: 0
   zombieAtkSound:
   - {fileID: 8300000, guid: 7f6efa6d0352a1246967c48f5fc8150d, type: 3}
   - {fileID: 8300000, guid: 1fb50a4d8c684ae4f86cf40ba4d257a9, type: 3}
   - {fileID: 8300000, guid: dbd3be9ba6d3af640bfd1fa68dc1340f, type: 3}
+  trackingRange: 15
+  wanderingTime: 4
   hitEffectPrefab: {fileID: 166404, guid: 78e1c8c5b281b8b439229473779ac9aa, type: 3}
 --- !u!195 &1689373857099165712
 NavMeshAgent:
@@ -898,7 +900,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.41
-  m_Speed: 2
+  m_Speed: 1.3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -907,7 +909,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: -0.09
+  m_BaseOffset: 0.065
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!82 &7913859487600060292
@@ -1014,7 +1016,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932454613422535620}
   serializedVersion: 4
-  m_Mass: 0.5
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

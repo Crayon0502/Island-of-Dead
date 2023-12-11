@@ -21,7 +21,7 @@ TagManager:
   - Enemy
   - WaterGround
   - PostProcessing
-  - 
+  - Player
   - FirstPersonWeapon
   - PhysicalAmmo
   - 

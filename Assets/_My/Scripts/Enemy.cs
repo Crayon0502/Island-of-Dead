@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     private float trackingRange = 10f;
 
     [SerializeField]
-    private float wanderingTime = 2f; // ·£´ýÇÏ°Ô °È´Â ½Ã°£
+    private float wanderingTime = 2f;
     private float currentWanderingTime = 0f;
 
     public GameObject hitEffectPrefab;

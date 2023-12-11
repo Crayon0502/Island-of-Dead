@@ -35,8 +35,6 @@ public class GameManger : MonoBehaviour
 
     [Header("Enemy")]
     [SerializeField]
-    private GameObject[] enemy;
-    [SerializeField]
     private GameObject[] spawnPoint;
 
     [Header("UI")]
@@ -113,7 +111,9 @@ public class GameManger : MonoBehaviour
 
     IEnumerator EnemySpawn()
     {
-        Instantiate(enemy[Random.Range(0,enemy.Length)], spawnPoint[Random.Range(0, spawnPoint.Length)].transform.position, Quaternion.identity);
+        //Instantiate(enemy[Random.Range(0,enemy.Length)], spawnPoint[Random.Range(0, spawnPoint.Length)].transform.position, Quaternion.identity);
+        GameObject enemy = PoolManager.instance.ActivateObj(Random.Range(4,6));
+        SetObjPosition(enemy, spawnPoint[Random.Range(0, spawnPoint.Length)].transform);
 
         yield return new WaitForSeconds(1.5f);
 

@@ -35,12 +35,14 @@ public class Enemy : MonoBehaviour
 
     private GameObject targetPlayer;
     private float targetDealay = 0.5f;
+    private CapsuleCollider enemyCollider;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         atkSound = GetComponent<AudioSource>();
+        enemyCollider = GetComponent<CapsuleCollider>();
         targetPlayer = GameObject.FindWithTag("Player");
         InitEnemyHP();
     }
@@ -145,9 +147,14 @@ public class Enemy : MonoBehaviour
     {
         agent.speed = 0;
         animator.SetTrigger("Dead");
+        enemyCollider.enabled = false;
 
         yield return new WaitForSeconds(3.5f);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
+        InitEnemyHP();
+        agent.speed = 1.3f;
+        enemyCollider.enabled = true;
     }
 
     public void PlayHitEffect(Vector3 hitPoint)

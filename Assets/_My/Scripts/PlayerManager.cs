@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     public float playerCurrentHP = 0;
     private float playerMaxInfection = 100;
     public float playerCurrentInfection = 0;
+    private bool isGun = false;
 
     [Header("Aim")]
     [SerializeField]
@@ -61,10 +62,12 @@ public class PlayerManager : MonoBehaviour
         gameManager = FindObjectOfType<GameManger>();
 
         InitPlayerHP();
+        isGun = false;
     }
 
     private void Update()
     {
+        Swap();
         AimCheck();
         InfectionIncrease();
         hpBar.value = playerCurrentHP / playerMaxHP;
@@ -76,9 +79,25 @@ public class PlayerManager : MonoBehaviour
         playerCurrentHP = playerMaxHP;
     }
 
+    private void Swap()
+    {
+        if(input.gun)
+        {
+            isGun = true;
+            anim.SetBool("isGun", true);
+            input.gun = false;
+        }
+        if(input.hand)
+        {
+            isGun = false;
+            anim.SetBool("isGun", false);
+            input.hand = false; 
+        }
+    }
+
     private void AimCheck()
     {
-        if (input.reload)
+        if (input.reload && isGun)
         {
             input.reload = false;
 
@@ -95,52 +114,73 @@ public class PlayerManager : MonoBehaviour
         if (controller.isReload)
             return;
 
-        if (input.aim)
+        if (isGun)
         {
-            AimControll(true);
-
-            SetRigWeight(1);
-            anim.SetLayerWeight(1, 1);
-
-            Vector3 targetPosition = Vector3.zero;
-            Transform camTransform = Camera.main.transform;
-            RaycastHit hit;
-
-            if (Physics.Raycast(camTransform.position, camTransform.forward, out hit, Mathf.Infinity, targetLayer))
+            if (input.aim)
             {
-                targetPosition = hit.point;
-                aimObj.transform.position = hit.point;
+                AimControll(true);
 
-                enemy = hit.collider.gameObject.GetComponent<Enemy>();
-                //float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                SetRigWeight(1);
+                anim.SetLayerWeight(1, 1);
+
+                Vector3 targetPosition = Vector3.zero;
+                Transform camTransform = Camera.main.transform;
+                RaycastHit hit;
+
+                if (Physics.Raycast(camTransform.position, camTransform.forward, out hit, Mathf.Infinity, targetLayer))
+                {
+                    targetPosition = hit.point;
+                    aimObj.transform.position = hit.point;
+
+                    enemy = hit.collider.gameObject.GetComponent<Enemy>();
+                    //float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+                }
+                else
+                {
+                    targetPosition = camTransform.position + camTransform.forward * aimObjDis;
+                    aimObj.transform.position = camTransform.position + camTransform.forward * aimObjDis;
+                }
+
+                Vector3 targetAim = targetPosition;
+                targetAim.y = transform.position.y;
+                Vector3 aimDir = (targetAim - transform.position).normalized;
+                transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 50f);
+
+                if (input.shoot)
+                {
+                    anim.SetBool("Shoot", true);
+                    GameManger.instance.Shooting(targetPosition, enemy, weaponSound, shootingSound);
+                }
+                else
+                {
+                    anim.SetBool("Shoot", false);
+                }
             }
             else
             {
-                targetPosition = camTransform.position + camTransform.forward * aimObjDis;
-                aimObj.transform.position = camTransform.position + camTransform.forward * aimObjDis;
-            }
-
-            Vector3 targetAim = targetPosition;
-            targetAim.y = transform.position.y;
-            Vector3 aimDir = (targetAim - transform.position).normalized;
-            transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 50f);
-
-            if (input.shoot)
-            {
-                anim.SetBool("Shoot", true);
-                GameManger.instance.Shooting(targetPosition, enemy, weaponSound, shootingSound);
-            }
-            else
-            {
+                AimControll(false);
+                SetRigWeight(0);
+                anim.SetLayerWeight(1, 0);
                 anim.SetBool("Shoot", false);
             }
         }
         else
         {
-            AimControll(false);
             SetRigWeight(0);
-            anim.SetLayerWeight(1, 0);
-            anim.SetBool("Shoot", false);
+
+            if (input.punching)
+            {
+                anim.SetLayerWeight(2, 1);
+
+                anim.SetTrigger("Punching");
+                input.punching = false;
+                controller.isPunching = true;
+            }
+            else
+            {
+                anim.SetLayerWeight(2, 0);
+                controller.isPunching = false;
+            }
         }
     }
 

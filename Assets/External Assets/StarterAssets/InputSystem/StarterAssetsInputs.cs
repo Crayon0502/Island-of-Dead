@@ -16,6 +16,9 @@ namespace StarterAssets
         public bool shoot;
         public bool reload;
         public bool interaction;
+        public bool gun;
+        public bool hand;
+        public bool punching;
 
         [Header("Movement Settings")]
         public bool analogMovement;
@@ -68,6 +71,21 @@ namespace StarterAssets
             InteractionInput(value.isPressed);
         }
 
+        public void OnGun(InputValue value)
+        {
+            GunInput(value.isPressed);
+        }
+
+        public void OnHand(InputValue value)
+        {
+            HandInput(value.isPressed);
+        }
+
+        public void OnPunching(InputValue value)
+        {
+            PunchingInput(value.isPressed);
+        }
+
 #endif
 
 
@@ -109,6 +127,21 @@ namespace StarterAssets
         public void InteractionInput(bool newInteractionState)
         {
             interaction = newInteractionState;
+        }
+
+        public void GunInput(bool newGunState)
+        {
+            gun = newGunState;
+        }
+
+        public void HandInput(bool newHandState)
+        {
+            hand = newHandState;
+        }
+
+        public void PunchingInput(bool newPunchigState)
+        {
+            punching = newPunchigState;
         }
 
         private void OnApplicationFocus(bool hasFocus)

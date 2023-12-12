@@ -36,6 +36,10 @@ public class GameManger : MonoBehaviour
     [Header("Enemy")]
     [SerializeField]
     private GameObject[] spawnPoint;
+    [SerializeField]
+    private int spawnedEnemies = 0;
+    [SerializeField]
+    private int maxEnemies = 50;
 
     [Header("UI")]
     public Image bloodScreen;
@@ -49,6 +53,7 @@ public class GameManger : MonoBehaviour
 
         InitBullet();
 
+        CountExistingZombies();
         StartCoroutine(EnemySpawn());
     }
 
@@ -109,14 +114,21 @@ public class GameManger : MonoBehaviour
         bloodScreen.color = Color.clear;
     }
 
+    private void CountExistingZombies()
+    {
+        GameObject[] existingZombies = GameObject.FindGameObjectsWithTag("Enemy"); // 태그는 적절히 변경
+        spawnedEnemies += existingZombies.Length;
+    }
+
     IEnumerator EnemySpawn()
     {
-        //Instantiate(enemy[Random.Range(0,enemy.Length)], spawnPoint[Random.Range(0, spawnPoint.Length)].transform.position, Quaternion.identity);
-        GameObject enemy = PoolManager.instance.ActivateObj(Random.Range(4,6));
-        SetObjPosition(enemy, spawnPoint[Random.Range(0, spawnPoint.Length)].transform);
+        while (spawnedEnemies < maxEnemies)
+        {
+            GameObject enemy = PoolManager.instance.ActivateObj(Random.Range(4, 6));
+            SetObjPosition(enemy, spawnPoint[Random.Range(0, spawnPoint.Length)].transform);
+            spawnedEnemies++;
 
-        yield return new WaitForSeconds(1.5f);
-
-        StartCoroutine(EnemySpawn());
+            yield return new WaitForSeconds(1.5f);
+        }
     }
 }

@@ -39,12 +39,25 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private Rig aimRig;
 
+    [Header("Weapon")]
+    [SerializeField]
+    private GameObject gunHand;
+    [SerializeField]
+    private GameObject gunBack;
+    [SerializeField]
+    private SphereCollider handMeleeArea_L;
+    [SerializeField]
+    private SphereCollider handMeleeArea_R;
+
     [Header("Weapon Sound Effect")]
     [SerializeField]
     private AudioClip shootingSound;
     [SerializeField]
     private AudioClip[] reloadSound;
     private AudioSource weaponSound;
+    [SerializeField]
+    private AudioClip[] handAtkSoundC;
+    private AudioSource handAtkSoundS;
 
     private GameManger gameManager;
     private Enemy enemy;
@@ -58,6 +71,7 @@ public class PlayerManager : MonoBehaviour
         controller = GetComponent<ThirdPersonController>();
         anim = GetComponent<Animator>();
         weaponSound = GetComponent<AudioSource>();
+        handAtkSoundS = GetComponent<AudioSource>();
         multiAimConstraint = GetComponent<MultiAimConstraint>();
         gameManager = FindObjectOfType<GameManger>();
 
@@ -82,16 +96,24 @@ public class PlayerManager : MonoBehaviour
     private void Swap()
     {
         if(input.gun)
+            isGun = true;  
+        if(input.hand)
+            isGun = false;
+
+
+        if (isGun)
         {
-            isGun = true;
             anim.SetBool("isGun", true);
             input.gun = false;
+            gunHand.SetActive(true);
+            gunBack.SetActive(false);
         }
-        if(input.hand)
+        else
         {
-            isGun = false;
             anim.SetBool("isGun", false);
-            input.hand = false; 
+            input.hand = false;
+            gunHand.SetActive(false);
+            gunBack.SetActive(true);
         }
     }
 
@@ -170,16 +192,13 @@ public class PlayerManager : MonoBehaviour
 
             if (input.punching)
             {
-                anim.SetLayerWeight(2, 1);
-
                 anim.SetTrigger("Punching");
                 input.punching = false;
                 controller.isPunching = true;
             }
             else
             {
-                anim.SetLayerWeight(2, 0);
-                controller.isPunching = false;
+
             }
         }
     }
@@ -253,4 +272,35 @@ public class PlayerManager : MonoBehaviour
             waterInfection = false;
         }
     }
+
+    public void PunchingAnimationEnd()
+    {
+        controller.isPunching = false;
+    }
+
+    public void HandAttack(int handAttack)
+    {
+        if (handAttack == 1)
+        {
+            handMeleeArea_L.enabled = true;
+            HandAtkSound(0);
+        }
+        else if (handAttack == 2)
+        {
+            handMeleeArea_R.enabled = true;
+            HandAtkSound(1);
+        }
+        else
+        {
+            handMeleeArea_L.enabled = false;
+            handMeleeArea_R.enabled = false;
+        }
+    }
+
+    private void HandAtkSound (int soundNum)
+    {
+        handAtkSoundS.clip = handAtkSoundC[soundNum];
+        handAtkSoundS.Play();
+    }
+
 }

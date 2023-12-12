@@ -164,4 +164,12 @@ public class Enemy : MonoBehaviour
             Instantiate(hitEffectPrefab, hitPoint, Quaternion.identity);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("HandAtk"))
+        {
+
+        }
+    }
 }

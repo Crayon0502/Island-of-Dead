@@ -11,6 +11,8 @@ TagManager:
   - EnemyAtk
   - Water
   - WaterGround
+  - Ladder
+  - HandAtk
   layers:
   - Default
   - TransparentFX

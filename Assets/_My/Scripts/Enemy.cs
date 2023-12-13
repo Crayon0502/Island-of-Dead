@@ -22,6 +22,11 @@ public class Enemy : MonoBehaviour
     private AudioSource atkSound;
 
     [SerializeField]
+    private AudioClip[] zombieHitSound;
+    private AudioSource hitSound;
+    private AudioSource deadSound;
+
+    [SerializeField]
     private float trackingRange = 10f;
 
     [SerializeField]
@@ -42,6 +47,8 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         atkSound = GetComponent<AudioSource>();
+        deadSound = GetComponent<AudioSource>();
+        hitSound = GetComponent<AudioSource>();
         enemyCollider = GetComponent<CapsuleCollider>();
         targetPlayer = GameObject.FindWithTag("Player");
         InitEnemyHP();
@@ -165,11 +172,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void HitSound()
+    {
+        hitSound.clip = zombieHitSound[Random.Range(0, 3)];
+        hitSound.Play();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("HandAtk"))
         {
-
+            enemyCurruntHP -= 0.7f;
+            HitSound();
         }
     }
 }

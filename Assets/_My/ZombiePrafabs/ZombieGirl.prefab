@@ -820,7 +820,7 @@ Transform:
   - {fileID: 7115116159894019126}
   - {fileID: 7347516847112734146}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1999791434358859694
 Animator:
@@ -887,6 +887,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7f6efa6d0352a1246967c48f5fc8150d, type: 3}
   - {fileID: 8300000, guid: 1fb50a4d8c684ae4f86cf40ba4d257a9, type: 3}
   - {fileID: 8300000, guid: dbd3be9ba6d3af640bfd1fa68dc1340f, type: 3}
+  zombieHitSound:
+  - {fileID: 8300000, guid: 0147661c12ea814488259f82d4a4aed8, type: 3}
+  - {fileID: 8300000, guid: e989cc91820b3eb429576404f338d14b, type: 3}
+  - {fileID: 8300000, guid: a91b6eb6aee93de4fa0b41a96fd36c96, type: 3}
   trackingRange: 15
   wanderingTime: 4
   hitEffectPrefab: {fileID: 166404, guid: 78e1c8c5b281b8b439229473779ac9aa, type: 3}

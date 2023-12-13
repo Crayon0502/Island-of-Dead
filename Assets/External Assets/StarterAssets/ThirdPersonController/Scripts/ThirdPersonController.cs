@@ -226,7 +226,7 @@ namespace StarterAssets
 
             if (isPunching)
             {
-                targetSpeed = 0.8f;
+                targetSpeed = 1.5f;
             }
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 

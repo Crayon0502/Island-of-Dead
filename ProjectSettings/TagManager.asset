@@ -13,6 +13,10 @@ TagManager:
   - WaterGround
   - Ladder
   - HandAtk
+  - HealPack
+  - Ammo
+  - Key
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -26,8 +30,8 @@ TagManager:
   - Player
   - FirstPersonWeapon
   - PhysicalAmmo
-  - 
-  - 
+  - HealPack
+  - Item
   - 
   - 
   - 

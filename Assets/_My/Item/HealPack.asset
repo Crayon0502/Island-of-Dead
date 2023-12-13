@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fbf68537863eab429963bd2805d2fee, type: 3}
+  m_Name: HealPack
+  m_EditorClassIdentifier: 
+  itemName: "\uAD6C\uAE09 \uC0C1\uC790"
+  itemType: 0
+  itemImage: {fileID: 21300000, guid: 4d2685472cb1ff942a7e002a9e2d181d, type: 3}
+  itemPrefab: {fileID: 118231018958650858, guid: 0a77bb34da37c1b488ba10dd9673abaa,
+    type: 3}
+  weaponType: 

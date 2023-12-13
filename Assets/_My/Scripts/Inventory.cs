@@ -22,6 +22,7 @@ public class Inventory : MonoBehaviour
     void Update()
     {
         TryOpenInventory();
+        UpdateMouseCursor();
     }
 
     private void TryOpenInventory()
@@ -40,11 +41,15 @@ public class Inventory : MonoBehaviour
     private void OpenInventory()
     {
         go_InventoryBase.SetActive(true);
+        Cursor.lockState = CursorLockMode.None; // 마우스 커서 잠금 해제
+        Cursor.visible = true; // 마우스 커서 표시
     }
 
     private void CloseInventory()
     {
         go_InventoryBase.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 잠금
+        Cursor.visible = false; // 마우스 커서 감춤
     }
 
     public void AcquireItem(Item _item, int _count = 1)
@@ -70,5 +75,11 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
+    }
+
+    private void UpdateMouseCursor()
+    {
+        // 인벤토리가 열려있을 때는 항상 마우스 커서를 보이게 유지
+        Cursor.visible = inventoruActivated;
     }
 }

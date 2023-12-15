@@ -17,6 +17,7 @@ public class Item : ScriptableObject
         HealPack,
         Ammo,
         Key,
-        ETC
+        BigAmmo,
+        Grenade
     }
 }

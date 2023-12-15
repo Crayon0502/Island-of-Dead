@@ -159,14 +159,18 @@ namespace StarterAssets
         {
             _hasAnimator = TryGetComponent(out _animator);
 
-            JumpAndGravity();
-            GroundedCheck();
-            Move();
+            if (!Inventory.inventoruActivated)
+            {
+                JumpAndGravity();
+                GroundedCheck();
+                Move();
+            }
         }
 
         private void LateUpdate()
         {
-            CameraRotation();
+            if (!Inventory.inventoruActivated)
+                CameraRotation();
         }
 
         private void AssignAnimationIDs()

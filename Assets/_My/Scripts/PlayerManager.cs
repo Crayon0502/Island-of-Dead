@@ -81,9 +81,13 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        Swap();
-        AimCheck();
-        InfectionIncrease();
+        if(!Inventory.inventoruActivated)
+        {
+            Swap();
+            AimCheck();
+            InfectionIncrease();
+        }
+        
         hpBar.value = playerCurrentHP / playerMaxHP;
         pollutionBar.value = playerCurrentInfection / playerMaxInfection;
     }

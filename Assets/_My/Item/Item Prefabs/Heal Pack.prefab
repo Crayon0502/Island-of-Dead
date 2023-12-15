@@ -36,7 +36,7 @@ Transform:
   m_Children:
   - {fileID: 6928258899370703730}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7213409863174511806
 MeshFilter:
@@ -215,7 +215,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.7259674, g: 1, b: 0.18553454, a: 1}
+  m_Color: {r: 0.00020742416, g: 1, b: 0, a: 1}
   m_Intensity: 1.2
   m_Range: 10
   m_SpotAngle: 30

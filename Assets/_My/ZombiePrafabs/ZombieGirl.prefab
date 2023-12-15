@@ -891,7 +891,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0147661c12ea814488259f82d4a4aed8, type: 3}
   - {fileID: 8300000, guid: e989cc91820b3eb429576404f338d14b, type: 3}
   - {fileID: 8300000, guid: a91b6eb6aee93de4fa0b41a96fd36c96, type: 3}
-  trackingRange: 15
+  trackingRange: 20
   wanderingTime: 4
   hitEffectPrefab: {fileID: 166404, guid: 78e1c8c5b281b8b439229473779ac9aa, type: 3}
 --- !u!195 &1689373857099165712
@@ -904,7 +904,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.41
-  m_Speed: 1.3
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

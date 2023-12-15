@@ -17,8 +17,11 @@ public class Slot : MonoBehaviour , IPointerClickHandler , IBeginDragHandler, IE
     [SerializeField]
     private GameObject go_CountImage;
 
+    private ItemEffectDatabase database;
+
     private void Start()
     {
+        database = FindObjectOfType<ItemEffectDatabase>();
         originPos = transform.position;
     }
 
@@ -72,16 +75,11 @@ public class Slot : MonoBehaviour , IPointerClickHandler , IBeginDragHandler, IE
         if(eventData.button == PointerEventData.InputButton.Right)
         {
             if(item != null) 
-            {
-                if(item.itemType == Item.ItemType.Grenade)
-                {
-
-                }
-                else
-                {
-                    Debug.Log(item.itemName + " 을 사용했습니다.");
-                    SetSlotCount(-1);
-                }
+            { 
+                 database.UseItem(item);
+                if(item.itemType == Item.ItemType.HealPack)
+                     SetSlotCount(-1);
+                
             }
         }
     }

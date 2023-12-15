@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private Slider hpBar;
     [SerializeField]
-    private Slider pollutionBar;
+    private Slider infectionBar;
     [SerializeField]
     private float playerMaxHP = 100;
     public float playerCurrentHP = 0;
@@ -62,7 +62,7 @@ public class PlayerManager : MonoBehaviour
     private GameManger gameManager;
     private Enemy enemy;
     private float infectionSpeed = 1f;
-    private bool infection = false;
+    public bool infection = false;
     private bool waterInfection = false;
 
     void Start()
@@ -89,7 +89,7 @@ public class PlayerManager : MonoBehaviour
         }
         
         hpBar.value = playerCurrentHP / playerMaxHP;
-        pollutionBar.value = playerCurrentInfection / playerMaxInfection;
+        infectionBar.value = playerCurrentInfection / playerMaxInfection;
     }
 
     private void InitPlayerHP()

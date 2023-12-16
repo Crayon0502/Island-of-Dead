@@ -18,8 +18,8 @@ public class GameManger : MonoBehaviour
     private float curruntShootDelay = 0.2f;
     [SerializeField]
     private Text bulletText;
-    private int maxBullet = 30;
-    private int curruntBullet = 0;
+    public int maxBullet = 0;
+    public int curruntBullet = 0;
 
     [Header("Weapon FX")]
     [SerializeField]
@@ -44,14 +44,17 @@ public class GameManger : MonoBehaviour
     [Header("UI")]
     public Image bloodScreen;
 
+    private Inventory inventory;
+    public int tempCount;
+
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
 
-        curruntShootDelay = 0;
+        inventory = FindObjectOfType<Inventory>();
 
-        InitBullet();
+        curruntShootDelay = 0;
 
         CountExistingZombies();
         StartCoroutine(EnemySpawn());
@@ -94,12 +97,10 @@ public class GameManger : MonoBehaviour
     {
         GameObject clipFX = PoolManager.instance.ActivateObj(3);
         SetObjPosition(clipFX, weaponClipPoint);
-        InitBullet();
-    }
 
-    private void InitBullet()
-    {
-        curruntBullet = maxBullet;
+        int plusBullet = Mathf.Min(30 - curruntBullet, maxBullet);
+        curruntBullet += plusBullet;
+        maxBullet -= plusBullet;
     }
 
     private void SetObjPosition(GameObject obj, Transform targetTransform)

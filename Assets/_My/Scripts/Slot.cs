@@ -37,13 +37,16 @@ public class Slot : MonoBehaviour , IPointerClickHandler , IBeginDragHandler, IE
     public void AddItem(Item _item, int _count = 1)
     {
         item = _item;
+
         itemCount = _count;
+
         itemImage.sprite = item.itemImage;
 
         go_CountImage.SetActive(true);
         text_Count.text = itemCount.ToString();
 
         SetColor(1);
+
     }
 
     //아이템 갯수 조절
@@ -76,7 +79,7 @@ public class Slot : MonoBehaviour , IPointerClickHandler , IBeginDragHandler, IE
         {
             if(item != null) 
             { 
-                 database.UseItem(item);
+                database.UseItem(item);
                 if(item.itemType == Item.ItemType.HealPack)
                      SetSlotCount(-1);
                 

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ActionController : MonoBehaviour
 {
     private StarterAssetsInputs input;
+    private GameManger gameManager;
 
     [SerializeField]
     private float range; // ½Àµæ °¡´ÉÇÑ ÃÖ´ë°Å¸®
@@ -27,6 +28,7 @@ public class ActionController : MonoBehaviour
     private void Start()
     {
         input = GetComponentInParent<StarterAssetsInputs>();
+        gameManager = FindObjectOfType<GameManger>();
     }
 
     void Update()
@@ -50,7 +52,11 @@ public class ActionController : MonoBehaviour
         {
             if(hitInfo.transform != null)
             {
-                theInventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
+                if (hitInfo.transform.tag == "Ammo")
+                    gameManager.maxBullet += 60;
+                else
+                    theInventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
+
                 Destroy(hitInfo.transform.gameObject);
                 InfoDisappear();
             }
@@ -65,6 +71,11 @@ public class ActionController : MonoBehaviour
             if (hitInfo.transform.tag == "Item")
             {
                 ItemInfoAppear();
+            }
+
+            else if (hitInfo.transform.tag == "Ammo")
+            {
+                AmmoInfoAppear();
             }
         }
         else
@@ -81,6 +92,19 @@ public class ActionController : MonoBehaviour
     }
 
     private void InfoDisappear()
+    {
+        pickupActivated = false;
+        actionText.gameObject.SetActive(false);
+    }
+
+    private void AmmoInfoAppear()
+    {
+        pickupActivated = true;
+        actionText.gameObject.SetActive(true);
+        actionText.text = "Á»ºñ Àü¿ë Åº È¹µæ " + "<color=yellow>" + "(F)" + "</color>";
+    }
+
+    private void AmmoDisappear()
     {
         pickupActivated = false;
         actionText.gameObject.SetActive(false);

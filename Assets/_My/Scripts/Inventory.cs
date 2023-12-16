@@ -11,12 +11,15 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private GameObject go_SlotParent;
 
+    private GameManger gameManager;
+
     //슬롯
     private Slot[] slots;
 
     void Start()
     {
         slots = go_SlotParent.GetComponentsInChildren<Slot>();
+        gameManager = FindObjectOfType<GameManger>();
     }
 
     void Update()
@@ -61,6 +64,7 @@ public class Inventory : MonoBehaviour
                 if (slots[i].item.itemName == _item.itemName)
                 {
                     slots[i].SetSlotCount(_count);
+                    
                     return;
                 }
             }
@@ -82,4 +86,5 @@ public class Inventory : MonoBehaviour
         // 인벤토리가 열려있을 때는 항상 마우스 커서를 보이게 유지
         Cursor.visible = inventoruActivated;
     }
+
 }

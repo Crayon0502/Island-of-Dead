@@ -22,6 +22,7 @@ public class PlayerManager : MonoBehaviour
     private float playerMaxInfection = 100;
     public float playerCurrentInfection = 0;
     private bool isGun = false;
+    public bool infection = false;
 
     [Header("Aim")]
     [SerializeField]
@@ -62,7 +63,6 @@ public class PlayerManager : MonoBehaviour
     private GameManger gameManager;
     private Enemy enemy;
     private float infectionSpeed = 1f;
-    public bool infection = false;
     private bool waterInfection = false;
 
     void Start()
@@ -123,7 +123,7 @@ public class PlayerManager : MonoBehaviour
 
     private void AimCheck()
     {
-        if (input.reload && isGun)
+        if (input.reload && isGun && gameManager.maxBullet > 0 && gameManager.curruntBullet != 30)
         {
             input.reload = false;
 

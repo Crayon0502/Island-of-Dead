@@ -17,6 +17,7 @@ TagManager:
   - Ammo
   - Key
   - Item
+  - Spawner
   layers:
   - Default
   - TransparentFX

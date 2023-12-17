@@ -42,8 +42,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   shadows:
-    m_OverrideState: 1
-    m_Value: {x: 1, y: 0.84058326, z: 0.8165749, w: 0}
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 0.85435444, z: 0.84196115, w: 0}
   midtones:
     m_OverrideState: 1
     m_Value: {x: 1, y: 0.8989689, z: 0.9109663, w: 0}

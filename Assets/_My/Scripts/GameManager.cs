@@ -36,16 +36,19 @@ public class GameManger : MonoBehaviour
     [Header("Enemy")]
     [SerializeField]
     private GameObject[] spawnPoint;
-    [SerializeField]
-    private int spawnedEnemies = 0;
+    public int spawnedEnemies = 0;
     [SerializeField]
     private int maxEnemies = 50;
 
     [Header("UI")]
     public Image bloodScreen;
 
+    [Header("Spawner")]
+    public int spawnerCount = 3;
+
     private Inventory inventory;
     public int tempCount;
+    private bool isSpawning = false;
 
     // Start is called before the first frame update
     void Start()
@@ -57,13 +60,13 @@ public class GameManger : MonoBehaviour
         curruntShootDelay = 0;
 
         CountExistingZombies();
-        StartCoroutine(EnemySpawn());
     }
 
     // Update is called once per frame
     void Update()
     {
         bulletText.text = curruntBullet + " / " + maxBullet;
+        StartCoroutine(EnemySpawn());
     }
 
     public void Shooting(Vector3 targetPosition, Enemy enemy, AudioSource weaponSound, AudioClip shootingSound)
@@ -110,21 +113,22 @@ public class GameManger : MonoBehaviour
 
     public IEnumerator ShowBloodScreen()
     {
-        bloodScreen.color = new Color(0.255f, 0, 0, UnityEngine.Random.Range(0.9f, 1f));
+        bloodScreen.color = new Color(0.255f, 0, 0, Random.Range(0.9f, 1f));
         yield return new WaitForSeconds(0.15f);
         bloodScreen.color = Color.clear;
     }
 
     private void CountExistingZombies()
     {
-        GameObject[] existingZombies = GameObject.FindGameObjectsWithTag("Enemy"); // 태그는 적절히 변경
+        GameObject[] existingZombies = GameObject.FindGameObjectsWithTag("Enemy");
         spawnedEnemies += existingZombies.Length;
     }
 
     IEnumerator EnemySpawn()
     {
-        while (spawnedEnemies < maxEnemies)
+        while (spawnedEnemies < maxEnemies && spawnerCount != 0)
         {
+
             GameObject enemy = PoolManager.instance.ActivateObj(Random.Range(4, 6));
             SetObjPosition(enemy, spawnPoint[Random.Range(0, spawnPoint.Length)].transform);
             spawnedEnemies++;

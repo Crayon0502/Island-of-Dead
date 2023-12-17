@@ -37,13 +37,16 @@ public class Enemy : MonoBehaviour
 
     private NavMeshAgent agent;
     private Animator animator;
+    private bool hasDied = false;
 
     private GameObject targetPlayer;
     private float targetDealay = 0.5f;
     private CapsuleCollider enemyCollider;
 
+    private GameManger gm;
     void Start()
     {
+        gm = FindObjectOfType<GameManger>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         atkSound = GetComponent<AudioSource>();
@@ -58,7 +61,7 @@ public class Enemy : MonoBehaviour
     {
         HpBar.value = enemyCurruntHP / enemyMaxHP;
 
-        if (enemyCurruntHP <= 0)
+        if (enemyCurruntHP <= 0 && !hasDied)
         {
             StartCoroutine(EnemyDie());
             return;
@@ -152,16 +155,24 @@ public class Enemy : MonoBehaviour
 
     IEnumerator EnemyDie()
     {
+        hasDied = true; 
+
         agent.speed = 0;
         animator.SetTrigger("Dead");
         enemyCollider.enabled = false;
+        EnemyCountDecrease();
 
         yield return new WaitForSeconds(3.5f);
-        //Destroy(gameObject);
+
         gameObject.SetActive(false);
         InitEnemyHP();
         agent.speed = 1.3f;
-        enemyCollider.enabled = true;
+        enemyCollider.enabled = true;  
+    }
+
+    private void EnemyCountDecrease()
+    {
+        gm.spawnedEnemies -= 1;
     }
 
     public void PlayHitEffect(Vector3 hitPoint)

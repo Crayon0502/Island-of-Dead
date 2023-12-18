@@ -44,8 +44,10 @@ public class Enemy : MonoBehaviour
     private CapsuleCollider enemyCollider;
 
     private GameManger gm;
+    private QManager qm;
     void Start()
     {
+        qm = FindObjectOfType<QManager>();
         gm = FindObjectOfType<GameManger>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -173,6 +175,7 @@ public class Enemy : MonoBehaviour
     private void EnemyCountDecrease()
     {
         gm.spawnedEnemies -= 1;
+        qm.zombieCount += 1;
     }
 
     public void PlayHitEffect(Vector3 hitPoint)

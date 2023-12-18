@@ -10,13 +10,14 @@ public class ActionController : MonoBehaviour
     private StarterAssetsInputs input;
     private GameManger gameManager;
     public bool isHasKey = false;
+    public bool talkShowing = false;
+    public bool questActivated = false;
 
     [SerializeField]
     private float range; // 습득 가능한 최대거리
 
     private bool pickupActivated = false;// 습득 가능할 시 true
-    private bool questActivated = false;
-
+    
     private RaycastHit hitInfo; // 충돌체 정보 저장 
 
     //아이템 레이어에만 반응 하도록 레이어 마스크 설정
@@ -47,7 +48,16 @@ public class ActionController : MonoBehaviour
         {
             CheckItem();
             CanPickUp();
-            StartTalk();
+            if(questActivated)
+            {
+                talkShowing = true;
+                actionText.gameObject.SetActive(false);
+                StartTalk();
+                questActivated = false;
+
+
+            }
+
         }
     }
 
@@ -105,7 +115,8 @@ public class ActionController : MonoBehaviour
             }
             else if (hitInfo.transform.tag == "NPC")
             {
-                QInfoAppear();
+                if (!talkShowing)
+                    QInfoAppear();
             }
         }
         else

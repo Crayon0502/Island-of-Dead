@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Spawner : MonoBehaviour
 {
     private GameManger gm;
+    private QManager qm;
 
 
     [SerializeField]
@@ -23,6 +24,7 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
+        qm = FindObjectOfType<QManager>();
         gm = FindObjectOfType<GameManger>();
         //hitSound = GetComponent<AudioSource>();
     }
@@ -42,6 +44,7 @@ public class Spawner : MonoBehaviour
         hasDied = true;  // 플래그를 true로 설정하여 체력이 0이 되었음을 나타냅니다.
 
         gm.spawnerCount -= 1;
+        qm.spawnerCount += 1;
         yield return null;  // 다음 프레임까지 대기
 
        

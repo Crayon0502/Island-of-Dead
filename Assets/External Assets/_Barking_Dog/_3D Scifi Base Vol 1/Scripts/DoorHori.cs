@@ -11,18 +11,27 @@ public class DoorHori : MonoBehaviour
 	
 	private Vector3 StartlocalPos;
 	private Vector3 endlocalPos;
-	
+
+	private ActionController ac;
+
 	private void Start()
 	{
+		ac = FindObjectOfType<ActionController>();
 		StartlocalPos = transform.localPosition;	
 		gameObject.isStatic = false;
 	}
 		
 	public void OpenDoor()
 	{
-		OTween.ValueTo(gameObject,ease,0.0f,-translateValue,easeTime,0.0f,"StartOpen","UpdateOpenDoor","EndOpen");
-		GetComponent<AudioSource>().Play();
-	}
+		if (ac.isHasKey)
+		{
+			OTween.ValueTo(gameObject, ease, 0.0f, -translateValue, easeTime, 0.0f, "StartOpen", "UpdateOpenDoor", "EndOpen");
+			GetComponent<AudioSource>().Play();
+		}
+		else
+			return;
+    }
+        
 	
 	private void UpdateOpenDoor(float f)
 	{		

@@ -6,13 +6,16 @@ using UnityEngine.UI;
 
 public class ActionController : MonoBehaviour
 {
+    private QManager qManager;
     private StarterAssetsInputs input;
     private GameManger gameManager;
+    public bool isHasKey = false;
 
     [SerializeField]
     private float range; // 습득 가능한 최대거리
 
-    private bool pickupActivated = false; // 습득 가능할 시 true
+    private bool pickupActivated = false;// 습득 가능할 시 true
+    private bool questActivated = false;
 
     private RaycastHit hitInfo; // 충돌체 정보 저장 
 
@@ -27,6 +30,7 @@ public class ActionController : MonoBehaviour
 
     private void Start()
     {
+        qManager = FindObjectOfType<QManager>();
         input = GetComponentInParent<StarterAssetsInputs>();
         gameManager = FindObjectOfType<GameManger>();
     }
@@ -43,6 +47,16 @@ public class ActionController : MonoBehaviour
         {
             CheckItem();
             CanPickUp();
+            StartTalk();
+        }
+    }
+
+
+    private void StartTalk()
+    {
+        if(questActivated)
+        {
+            qManager.TalkStart();
         }
     }
 
@@ -54,6 +68,13 @@ public class ActionController : MonoBehaviour
             {
                 if (hitInfo.transform.tag == "Ammo")
                     gameManager.maxBullet += 60;
+
+                else if (hitInfo.transform.tag == "Key")
+                {
+                    isHasKey = true;
+                    theInventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
+                }
+      
                 else
                     theInventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
 
@@ -73,9 +94,18 @@ public class ActionController : MonoBehaviour
                 ItemInfoAppear();
             }
 
+            else if (hitInfo.transform.tag == "Key")
+            {
+                ItemInfoAppear();
+            }
+
             else if (hitInfo.transform.tag == "Ammo")
             {
                 AmmoInfoAppear();
+            }
+            else if (hitInfo.transform.tag == "NPC")
+            {
+                QInfoAppear();
             }
         }
         else
@@ -91,6 +121,13 @@ public class ActionController : MonoBehaviour
         actionText.text = hitInfo.transform.GetComponent<ItemPickUp>().item.itemName + " 획득 " + "<color=yellow>" + "(F)" + "</color>";
     }
 
+    private void QInfoAppear()
+    {
+        questActivated = true;
+        actionText.gameObject.SetActive(true);
+        actionText.text = "부상당한 군인에게 말걸기 " + "<color=yellow>" + "(F)" + "</color>";
+    }
+
     private void InfoDisappear()
     {
         pickupActivated = false;
@@ -102,11 +139,5 @@ public class ActionController : MonoBehaviour
         pickupActivated = true;
         actionText.gameObject.SetActive(true);
         actionText.text = "좀비 전용 탄 획득 " + "<color=yellow>" + "(F)" + "</color>";
-    }
-
-    private void AmmoDisappear()
-    {
-        pickupActivated = false;
-        actionText.gameObject.SetActive(false);
     }
 }

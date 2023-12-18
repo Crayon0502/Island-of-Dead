@@ -18,6 +18,7 @@ TagManager:
   - Key
   - Item
   - Spawner
+  - NPC
   layers:
   - Default
   - TransparentFX

@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class QManager : MonoBehaviour
 {
+    public bool questAllComplete = false;
+    private bool q1Complete = false;
+    private bool q2Complete = false;
+    private bool q3Complete = false;
+
     public int zombieCount = 0;
     public int spawnerCount = 0;
 
@@ -20,6 +25,10 @@ public class QManager : MonoBehaviour
     public Text q1;
     public Text q2;
     public Text q3;
+
+    public Image q1Image;
+    public Image q2Image;
+    public Image q3Image;
 
     private ActionController ac;
 
@@ -59,12 +68,41 @@ public class QManager : MonoBehaviour
                 q3.text = "ÁøÇàµµ : 1 / 1";
         }
 
+        QuestCheck();
     }
 
     private void QuestStart()
     {
         isQuestStart = true;
         QuestBase.SetActive(true);
+    }
+
+    private void QuestCheck()
+    {
+        if (isQuestStart)
+        {
+            if (zombieCount >= 20)
+            {
+                q1Image.color = new Color(0, 0.35f, 0, 0.25f);
+                q1Complete = true;
+            }
+
+            if (spawnerCount == 3)
+            {
+                q2Image.color = new Color(0, 0.35f, 0, 0.25f);
+                q2Complete = true;
+            }
+
+            if (ac.isHasKey)
+            {
+                q3Image.color = new Color(0, 0.35f, 0, 0.25f);
+                q3Complete = true;
+            }
+
+            if (q1Complete && q2Complete && q3Complete)
+                questAllComplete = true;
+        }
+        
     }
 
     public void TalkStart()

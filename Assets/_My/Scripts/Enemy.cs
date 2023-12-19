@@ -69,15 +69,17 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        if (targetPlayer != null && Vector3.Distance(transform.position, targetPlayer.transform.position) <= trackingRange)
+        if (!hasDied) // 사망한 경우에는 더 이상 업데이트를 수행하지 않도록
         {
-            Chase(); // 플레이어 추적
+            if (targetPlayer != null && Vector3.Distance(transform.position, targetPlayer.transform.position) <= trackingRange)
+            {
+                Chase(); // 플레이어 추적
+            }
+            else
+            {
+                Wander(); // 배회
+            }
         }
-        else
-        {
-            Wander(); // 배회
-        }
-
     }
 
     private void Chase()
@@ -157,7 +159,8 @@ public class Enemy : MonoBehaviour
 
     IEnumerator EnemyDie()
     {
-        hasDied = true; 
+
+        hasDied = true;
 
         agent.speed = 0;
         animator.SetTrigger("Dead");
@@ -168,8 +171,9 @@ public class Enemy : MonoBehaviour
 
         gameObject.SetActive(false);
         InitEnemyHP();
-        agent.speed = 1.3f;
-        enemyCollider.enabled = true;  
+        agent.speed = 2f;
+        enemyCollider.enabled = true;
+        hasDied = false;
     }
 
     private void EnemyCountDecrease()

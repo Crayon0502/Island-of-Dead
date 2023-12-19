@@ -42,6 +42,9 @@ public class GameManger : MonoBehaviour
 
     [Header("UI")]
     public Image bloodScreen;
+    [SerializeField]
+    private GameObject supportUI;
+    private bool spUIOn = true;
 
     [Header("Spawner")]
     public int spawnerCount = 3;
@@ -67,6 +70,21 @@ public class GameManger : MonoBehaviour
     {
         bulletText.text = curruntBullet + " / " + maxBullet;
         StartCoroutine(EnemySpawn());
+
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            SupportUIOnOff();
+        }
+    }
+
+    private void SupportUIOnOff()
+    {
+        spUIOn = !spUIOn;
+
+        if (spUIOn)
+            supportUI.SetActive(true);
+        else 
+            supportUI.SetActive(false);
     }
 
     public void Shooting(Vector3 targetPosition, Enemy enemy, AudioSource weaponSound, AudioClip shootingSound)

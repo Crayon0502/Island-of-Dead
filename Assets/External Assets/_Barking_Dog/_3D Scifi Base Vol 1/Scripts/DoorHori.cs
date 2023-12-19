@@ -13,9 +13,11 @@ public class DoorHori : MonoBehaviour
 	private Vector3 endlocalPos;
 
 	private ActionController ac;
+	private QManager qm;
 
 	private void Start()
 	{
+		qm = FindObjectOfType<QManager>();
 		ac = FindObjectOfType<ActionController>();
 		StartlocalPos = transform.localPosition;	
 		gameObject.isStatic = false;
@@ -23,7 +25,7 @@ public class DoorHori : MonoBehaviour
 		
 	public void OpenDoor()
 	{
-		if (ac.isHasKey)
+		if (qm.questAllComplete)
 		{
 			OTween.ValueTo(gameObject, ease, 0.0f, -translateValue, easeTime, 0.0f, "StartOpen", "UpdateOpenDoor", "EndOpen");
 			GetComponent<AudioSource>().Play();

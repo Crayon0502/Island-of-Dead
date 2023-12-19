@@ -49,6 +49,14 @@ public class BulletManager : MonoBehaviour
             other.gameObject.GetComponent<Enemy>().PlayHitEffect(hitPoint);
         }
 
+        if (other.CompareTag("Spawner"))
+        {
+            other.gameObject.GetComponent<Spawner>().spawnerCurruntHP -= 0.7f;
+            Vector3 hitPoint = other.ClosestPointOnBounds(transform.position);
+            other.gameObject.GetComponent<Spawner>().PlayHitEffect(hitPoint);
+            other.gameObject.GetComponent<Spawner>().HitSound();
+        }
+
         gameObject.SetActive(false);
     }
 }

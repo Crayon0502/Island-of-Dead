@@ -16,7 +16,7 @@ public class ActionController : MonoBehaviour
     [SerializeField]
     private float range; // 습득 가능한 최대거리
 
-    private bool pickupActivated = false;// 습득 가능할 시 true
+    private bool pickupActivated = false; // 습득 가능할 시 true
     
     private RaycastHit hitInfo; // 충돌체 정보 저장 
 

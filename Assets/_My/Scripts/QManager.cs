@@ -22,21 +22,27 @@ public class QManager : MonoBehaviour
     public string[] talk;
 
     public GameObject QuestBase;
+    public GameObject NextQuestBase;
     public Text q1;
     public Text q2;
     public Text q3;
+    public Text q4;
 
     public Image q1Image;
     public Image q2Image;
     public Image q3Image;
+    public Image q4Image;
 
     private ActionController ac;
+    private Cleartrigger cl;
 
     void Start()
     {
+        cl = FindObjectOfType<Cleartrigger>();
         ac = FindObjectOfType<ActionController>();
         talkBase.SetActive(false);
         QuestBase.SetActive(false);
+        NextQuestBase.SetActive(false);
     }
 
     void Update()
@@ -100,7 +106,18 @@ public class QManager : MonoBehaviour
             }
 
             if (q1Complete && q2Complete && q3Complete)
+            {
+                QuestBase.SetActive(false);
                 questAllComplete = true;
+                NextQuestBase.SetActive(true);
+            }
+
+            if(cl.systemOff)
+            {
+                q4Image.color = new Color(0, 0.35f, 0, 0.25f);
+                q4.text = "ÁøÇàµµ : 1 / 1";
+            }
+                
         }
         
     }

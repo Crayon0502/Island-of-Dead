@@ -19,6 +19,8 @@ TagManager:
   - Item
   - Spawner
   - NPC
+  - ClearTrigger
+  - End
   layers:
   - Default
   - TransparentFX

@@ -1,4 +1,5 @@
 using Cinemachine;
+using System.Collections;
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -22,7 +23,7 @@ public class PlayerManager : MonoBehaviour
     private float playerMaxInfection = 100;
     public float playerCurrentInfection = 0;
     private bool isGun = false;
-    private bool isDie = false;
+    public bool isDie = false;
     public bool infection = false;
 
 
@@ -64,6 +65,17 @@ public class PlayerManager : MonoBehaviour
     private AudioClip[] handAtkSoundC;
     private AudioSource handAtkSoundS;
 
+    [Header("UI")]
+    [SerializeField]
+    private GameObject dieBase;
+    [SerializeField]
+    private Text playerDieText;
+    [SerializeField]
+    private GameObject diePanel;
+    [SerializeField]
+    private Image dieBloodScreen;
+    [SerializeField]
+    private GameObject restartButton;
     private GameManger gameManager;
     private Enemy enemy;
     private float infectionSpeed = 1f;
@@ -85,25 +97,63 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if(playerCurrentHP <= 0)
+        if (!isDie)
         {
-
+            if (!Inventory.inventoruActivated)
+            {
+                Swap();
+                AimCheck();
+                InfectionIncrease();
+            }
         }
 
-        if(playerCurrentInfection >= 0)
-        {
+        if (playerCurrentHP > 100)
+            playerCurrentHP = 100;
+        if (playerCurrentInfection < 0)
+            playerCurrentInfection = 0;
 
+        if (playerCurrentHP <= 0 || playerCurrentInfection >= 100)
+        {
+            StartCoroutine(PlayerDied());
         }
 
-        if(!Inventory.inventoruActivated)
-        {
-            Swap();
-            AimCheck();
-            InfectionIncrease();
-        }
-        
         hpBar.value = playerCurrentHP / playerMaxHP;
         infectionBar.value = playerCurrentInfection / playerMaxInfection;
+    }
+
+    IEnumerator PlayerDied()
+    {
+        dieBase.SetActive(true);
+        isDie = true;
+        // 판넬을 서서히 나타나게 함
+        while (diePanel.GetComponent<Image>().color.a < 1.0f)
+        {
+            Color panelColor = diePanel.GetComponent<Image>().color;
+            panelColor += new Color(0, 0, 0, Time.deltaTime * 0.02f);
+            diePanel.GetComponent<Image>().color = panelColor;
+            yield return null;
+        }
+
+        // 블러드 스크린을 서서히 나타나게 함
+        while (dieBloodScreen.color.a < 1.0f)
+        {
+            dieBloodScreen.color += new Color(0, 0, 0, Time.deltaTime * 0.01f);
+            yield return null;
+        }
+
+        while (playerDieText.color.a < 1.0f)
+        {
+            playerDieText.color += new Color(0f, 0, 0, Time.deltaTime * 0.01f); 
+            yield return null;
+        }
+
+
+
+        yield return new WaitForSeconds(2f);
+
+        restartButton.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void InitPlayerHP()
@@ -260,7 +310,7 @@ public class PlayerManager : MonoBehaviour
     private void InfectionIncrease()
     {
         if (infection)
-            playerCurrentInfection += Time.deltaTime * 0.5f;
+            playerCurrentInfection += Time.deltaTime * 1f;
 
         if (waterInfection)
             playerCurrentInfection += Time.deltaTime * infectionSpeed;
@@ -279,7 +329,7 @@ public class PlayerManager : MonoBehaviour
         if (other.CompareTag("Water"))
         {
             waterInfection = true;
-            infectionSpeed = 0.6f;
+            infectionSpeed = 4f;
         }
     }
 

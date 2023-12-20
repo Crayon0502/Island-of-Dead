@@ -11,6 +11,7 @@ public class Cleartrigger : MonoBehaviour
     public GameObject fire;
     private StarterAssetsInputs input;
     private GameManger gameManager;
+    private QManager qManager;
 
     [SerializeField]
     private float range; 
@@ -31,6 +32,7 @@ public class Cleartrigger : MonoBehaviour
         fire.SetActive(false);
         input = GetComponentInParent<StarterAssetsInputs>();
         gameManager = FindObjectOfType<GameManger>();
+        qManager = FindObjectOfType<QManager>();
     }
 
     void Update()
@@ -57,9 +59,19 @@ public class Cleartrigger : MonoBehaviour
         {
             if (hitInfo.transform != null)
             {
-                systemOff = true;
-                Destroy(hitInfo.transform.gameObject);
-                Disappear();
+                if (hitInfo.transform.tag == "ClearTrigger")
+                {
+                    systemOff = true;
+                    Destroy(hitInfo.transform.gameObject);
+                    Disappear();
+                }
+
+                if (hitInfo.transform.tag == "End")
+                {
+
+                    Disappear();
+                }
+
             }
         }
 
@@ -74,6 +86,11 @@ public class Cleartrigger : MonoBehaviour
                 Appear();
             }
 
+            if (hitInfo.transform.tag == "End")
+            {
+                Appear2();
+            }
+
         }
         else
         {
@@ -86,6 +103,16 @@ public class Cleartrigger : MonoBehaviour
         Activated = true;
         actionText2.gameObject.SetActive(true);
         actionText2.text = "½Ã½ºÅÛ ÆÄ±« " + "<color=yellow>" + "(F)" + "</color>";
+    }
+
+    private void Appear2()
+    {
+        if (qManager.lastQComplete)
+        {
+            Activated = true;
+            actionText2.gameObject.SetActive(true);
+            actionText2.text = "º¸Æ®¿¡ Å¾½Â " + "<color=yellow>" + "(F)" + "</color>";
+        }
     }
 
     private void Disappear()

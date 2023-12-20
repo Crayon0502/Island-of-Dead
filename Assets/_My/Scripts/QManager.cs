@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class QManager : MonoBehaviour
 {
     public bool questAllComplete = false;
+    public bool lastQComplete = false;
     private bool q1Complete = false;
     private bool q2Complete = false;
     private bool q3Complete = false;
@@ -116,6 +117,7 @@ public class QManager : MonoBehaviour
             {
                 q4Image.color = new Color(0, 0.35f, 0, 0.25f);
                 q4.text = "ÁøÇàµµ : 1 / 1";
+                lastQComplete = true;
             }
                 
         }

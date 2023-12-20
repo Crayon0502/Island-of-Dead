@@ -42,8 +42,6 @@ public class Slot : MonoBehaviour , IPointerClickHandler , IBeginDragHandler, IE
 
         itemImage.sprite = item.itemImage;
 
-        if(item.itemType == Item.ItemType.Key)
-
         go_CountImage.SetActive(true);
         text_Count.text = itemCount.ToString();
 

@@ -14,6 +14,8 @@ namespace StarterAssets
 #endif
     public class ThirdPersonController : MonoBehaviour
     {
+        private PlayerManager pm;
+
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s (걷기 속도)")]
         public float MoveSpeed = 2.0f;
@@ -137,6 +139,8 @@ namespace StarterAssets
 
         private void Start()
         {
+            pm = FindObjectOfType<PlayerManager>();
+
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
             _hasAnimator = TryGetComponent(out _animator);
@@ -390,7 +394,7 @@ namespace StarterAssets
 
         private void OnFootstep(AnimationEvent animationEvent)
         {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
+            if (animationEvent.animatorClipInfo.weight > 0.5f && !pm.isDie)
             {
                 if (FootstepAudioClips.Length > 0)
                 {
@@ -402,7 +406,7 @@ namespace StarterAssets
 
         private void OnLand(AnimationEvent animationEvent)
         {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
+            if (animationEvent.animatorClipInfo.weight > 0.5f && !pm.isDie)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }

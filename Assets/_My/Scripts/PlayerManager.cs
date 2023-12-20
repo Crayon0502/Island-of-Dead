@@ -22,8 +22,12 @@ public class PlayerManager : MonoBehaviour
     private float playerMaxInfection = 100;
     public float playerCurrentInfection = 0;
     private bool isGun = false;
+    private bool isDie = false;
     public bool infection = false;
 
+
+
+    
     [Header("Aim")]
     [SerializeField]
     private CinemachineVirtualCamera aimCam;
@@ -81,6 +85,16 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        if(playerCurrentHP <= 0)
+        {
+
+        }
+
+        if(playerCurrentInfection >= 0)
+        {
+
+        }
+
         if(!Inventory.inventoruActivated)
         {
             Swap();
@@ -306,5 +320,4 @@ public class PlayerManager : MonoBehaviour
         handAtkSoundS.clip = handAtkSoundC[soundNum];
         handAtkSoundS.Play();
     }
-
 }

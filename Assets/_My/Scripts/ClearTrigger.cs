@@ -23,7 +23,7 @@ public class Cleartrigger : MonoBehaviour
     private LayerMask layerMask;
 
     [SerializeField]
-    private Text actionText;
+    private Text actionText2;
     [SerializeField]
 
     private void Start()
@@ -84,14 +84,14 @@ public class Cleartrigger : MonoBehaviour
     private void Appear()
     {
         Activated = true;
-        actionText.gameObject.SetActive(true);
-        actionText.text = "½Ã½ºÅÛ ÆÄ±« " + "<color=yellow>" + "(F)" + "</color>";
+        actionText2.gameObject.SetActive(true);
+        actionText2.text = "½Ã½ºÅÛ ÆÄ±« " + "<color=yellow>" + "(F)" + "</color>";
     }
 
     private void Disappear()
     {
         Activated = false;
-        actionText.gameObject.SetActive(false);
+        actionText2.gameObject.SetActive(false);
     }
 
 }

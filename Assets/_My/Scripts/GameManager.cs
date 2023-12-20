@@ -42,6 +42,7 @@ public class GameManger : MonoBehaviour
 
     [Header("UI")]
     public Image bloodScreen;
+    private Text dieText;
     [SerializeField]
     private GameObject supportUI;
     private bool spUIOn = true;
@@ -127,6 +128,11 @@ public class GameManger : MonoBehaviour
     private void SetObjPosition(GameObject obj, Transform targetTransform)
     {
         obj.transform.position = targetTransform.position;
+    }
+
+    public void PlayerDie()
+    {
+        bloodScreen.color = new Color(0.255f, 0, 0, 1f);
     }
 
     public IEnumerator ShowBloodScreen()

@@ -97,6 +97,13 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        if(GameManger.instance.isReady)
+        {
+            AimControll(false);
+            SetRigWeight(0);
+            return;
+        }
+
         if (!isDie)
         {
             if (!Inventory.inventoruActivated)

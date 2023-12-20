@@ -161,6 +161,10 @@ namespace StarterAssets
 
         private void Update()
         {
+
+            if (GameManger.instance.isReady)
+                return;
+
             _hasAnimator = TryGetComponent(out _animator);
 
             if (!Inventory.inventoruActivated)

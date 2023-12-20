@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class GameManger : MonoBehaviour
@@ -41,6 +42,8 @@ public class GameManger : MonoBehaviour
     private int maxEnemies = 50;
 
     [Header("UI")]
+    [SerializeField]
+    private GameObject canvas;
     public Image bloodScreen;
     [SerializeField]
     private GameObject supportUI;
@@ -49,6 +52,14 @@ public class GameManger : MonoBehaviour
     [Header("Spawner")]
     public int spawnerCount = 3;
 
+    [Header("BGM")]
+    [SerializeField]
+    private AudioClip bgmSound;
+    private AudioSource bgmSource;
+
+    private PlayableDirector cut;
+    public bool isReady = true;
+
     private Inventory inventory;
     public int tempCount;
     private bool isSpawning = false;
@@ -56,6 +67,11 @@ public class GameManger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canvas.SetActive(false);
+
+        cut = GetComponent<PlayableDirector>();
+        cut.Play();
+
         instance = this;
 
         inventory = FindObjectOfType<Inventory>();
@@ -153,5 +169,20 @@ public class GameManger : MonoBehaviour
 
             yield return new WaitForSeconds(1.5f);
         }
+    }
+
+    private void PlayBGMSound()
+    {
+        bgmSource = GetComponent<AudioSource>();
+        bgmSource.clip = bgmSound;
+        bgmSource.loop = true;
+        bgmSource.Play();
+    }
+
+    public void StartGame()
+    {
+        isReady = false;
+        PlayBGMSound();
+        canvas.SetActive(true);
     }
 }

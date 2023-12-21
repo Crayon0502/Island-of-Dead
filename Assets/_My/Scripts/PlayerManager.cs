@@ -170,10 +170,9 @@ public class PlayerManager : MonoBehaviour
     {
         endBase.SetActive(true);
 
-        // 블러드 스크린을 서서히 나타나게 함
         while (endImage.color.a < 1.0f)
         {
-            endImage.color += new Color(0.85f, 0.85f, 0.85f, Time.deltaTime * 0.5f);
+            endImage.color += new Color(0.65f, 0.65f, 0.65f, Time.deltaTime * 0.5f);
             yield return null;
         }
 

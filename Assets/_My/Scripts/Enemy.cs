@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private Slider HpBar;
-    public float zombieAtkDamage = 7f;
+    public float zombieAtkDamage = 9f;
 
     [SerializeField]
     private SphereCollider meleeArea;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManger : MonoBehaviour
@@ -63,7 +64,7 @@ public class GameManger : MonoBehaviour
 
     private Inventory inventory;
     public int tempCount;
-    private bool isSpawning = false;
+    //private bool isSpawning = false;
 
     // Start is called before the first frame update
     void Start()
@@ -186,5 +187,10 @@ public class GameManger : MonoBehaviour
         isReady = false;
         PlayBGMSound();
         canvas.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
     }
 }

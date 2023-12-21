@@ -168,7 +168,6 @@ public class PlayerManager : MonoBehaviour
 
      IEnumerator EndGame()
     {
-
         endBase.SetActive(true);
 
         // 블러드 스크린을 서서히 나타나게 함

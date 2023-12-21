@@ -51,7 +51,7 @@ public class BulletManager : MonoBehaviour
 
         if (other.CompareTag("Spawner"))
         {
-            other.gameObject.GetComponent<Spawner>().spawnerCurruntHP -= 0.7f;
+            other.gameObject.GetComponent<Spawner>().spawnerCurruntHP -= 0.4f;
             Vector3 hitPoint = other.ClosestPointOnBounds(transform.position);
             other.gameObject.GetComponent<Spawner>().PlayHitEffect(hitPoint);
             other.gameObject.GetComponent<Spawner>().HitSound();

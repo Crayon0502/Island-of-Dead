@@ -92,7 +92,7 @@ public class Spawner : MonoBehaviour
     {
         if (other.CompareTag("HandAtk"))
         {
-            spawnerCurruntHP -= 0.3f;
+            spawnerCurruntHP -= 0.5f;
             HitSound();
         }
     }

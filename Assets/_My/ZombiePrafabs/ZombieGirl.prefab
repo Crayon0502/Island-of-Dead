@@ -820,7 +820,7 @@ Transform:
   - {fileID: 7115116159894019126}
   - {fileID: 7347516847112734146}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1999791434358859694
 Animator:
@@ -879,9 +879,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HpBar: {fileID: 6242908955529462415}
-  zombieAtkDamage: 7
+  zombieAtkDamage: 9
   meleeArea: {fileID: 1681142108926200543}
-  enemyMaxHP: 6
+  enemyMaxHP: 10
   enemyCurruntHP: 0
   zombieAtkSound:
   - {fileID: 8300000, guid: 7f6efa6d0352a1246967c48f5fc8150d, type: 3}
@@ -904,7 +904,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.41
-  m_Speed: 2
+  m_Speed: 2.7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

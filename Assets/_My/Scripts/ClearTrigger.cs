@@ -110,12 +110,11 @@ public class Cleartrigger : MonoBehaviour
 
     private void Appear2()
     {
-        Activated = true;
-        actionText2.gameObject.SetActive(true);
-        actionText2.text = "º¸Æ®¿¡ Å¾½Â " + "<color=yellow>" + "(F)" + "</color>";
         if (qManager.lastQComplete)
         {
-           
+            Activated = true;
+            actionText2.gameObject.SetActive(true);
+            actionText2.text = "º¸Æ®¿¡ Å¾½Â " + "<color=yellow>" + "(F)" + "</color>";
         }
     }
 

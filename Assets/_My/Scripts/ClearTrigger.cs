@@ -18,7 +18,8 @@ public class Cleartrigger : MonoBehaviour
     [SerializeField]
     private float range; 
 
-    private bool Activated = false; 
+    private bool Activated = false;
+    private bool hasExploded = false;
 
     private RaycastHit hitInfo; 
 
@@ -28,9 +29,12 @@ public class Cleartrigger : MonoBehaviour
     [SerializeField]
     private Text actionText2;
     [SerializeField]
+    private AudioClip boomSound;
+    private AudioSource boom;
 
     private void Start()
     {
+        boom = GetComponent<AudioSource>();
         fire.SetActive(false);
         pm = FindObjectOfType<PlayerManager>();
         input = GetComponentInParent<StarterAssetsInputs>();
@@ -52,8 +56,13 @@ public class Cleartrigger : MonoBehaviour
             CanAction();
         }
 
-        if(systemOff)
+        if (systemOff && !hasExploded)
+        {
+            BoomSound();
             fire.SetActive(true);
+            hasExploded = true; 
+        }
+
     }
 
     private void CanAction()
@@ -78,6 +87,12 @@ public class Cleartrigger : MonoBehaviour
             }
         }
 
+    }
+
+    private void BoomSound()
+    {
+        boom.clip = boomSound;
+        boom.Play();
     }
 
     private void CheckTrigger()

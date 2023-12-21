@@ -141,6 +141,7 @@ public class ActionController : MonoBehaviour
 
     private void InfoDisappear()
     {
+        questActivated = false;
         pickupActivated = false;
         actionText.gameObject.SetActive(false);
     }

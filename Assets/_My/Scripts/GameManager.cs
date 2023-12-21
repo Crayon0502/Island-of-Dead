@@ -57,6 +57,7 @@ public class GameManger : MonoBehaviour
     private AudioClip bgmSound;
     private AudioSource bgmSource;
 
+    private PlayerManager pm;
     private PlayableDirector cut;
     public bool isReady = true;
 
@@ -74,6 +75,7 @@ public class GameManger : MonoBehaviour
 
         instance = this;
 
+        pm = FindObjectOfType<PlayerManager>();
         inventory = FindObjectOfType<Inventory>();
 
         curruntShootDelay = 0;

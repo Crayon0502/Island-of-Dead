@@ -9,8 +9,10 @@ public class Cleartrigger : MonoBehaviour
     public bool systemOff = false;
 
     public GameObject fire;
+
     private StarterAssetsInputs input;
     private GameManger gameManager;
+    private PlayerManager pm;
     private QManager qManager;
 
     [SerializeField]
@@ -30,6 +32,7 @@ public class Cleartrigger : MonoBehaviour
     private void Start()
     {
         fire.SetActive(false);
+        pm = FindObjectOfType<PlayerManager>();
         input = GetComponentInParent<StarterAssetsInputs>();
         gameManager = FindObjectOfType<GameManger>();
         qManager = FindObjectOfType<QManager>();
@@ -68,7 +71,7 @@ public class Cleartrigger : MonoBehaviour
 
                 if (hitInfo.transform.tag == "End")
                 {
-
+                    pm.End();
                     Disappear();
                 }
 
@@ -107,11 +110,12 @@ public class Cleartrigger : MonoBehaviour
 
     private void Appear2()
     {
+        Activated = true;
+        actionText2.gameObject.SetActive(true);
+        actionText2.text = "º¸Æ®¿¡ Å¾½Â " + "<color=yellow>" + "(F)" + "</color>";
         if (qManager.lastQComplete)
         {
-            Activated = true;
-            actionText2.gameObject.SetActive(true);
-            actionText2.text = "º¸Æ®¿¡ Å¾½Â " + "<color=yellow>" + "(F)" + "</color>";
+           
         }
     }
 

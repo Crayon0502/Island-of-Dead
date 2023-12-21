@@ -162,7 +162,7 @@ namespace StarterAssets
         private void Update()
         {
 
-            if (GameManger.instance.isReady)
+            if (GameManger.instance.isReady || pm.isDie)
                 return;
 
             _hasAnimator = TryGetComponent(out _animator);

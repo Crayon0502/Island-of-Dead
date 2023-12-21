@@ -4,6 +4,7 @@ using StarterAssets;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -76,13 +77,35 @@ public class PlayerManager : MonoBehaviour
     private Image dieBloodScreen;
     [SerializeField]
     private GameObject restartButton;
+
+    [SerializeField]
+    private GameObject endBase;
+    [SerializeField]
+    private Image endImage;
+    [SerializeField]
+    private Text endText;
+    [SerializeField]
+    private GameObject endRestartButton;
+    [SerializeField]
+    private GameObject endFireFX;
+    [SerializeField]
+    private GameObject inGameUI;
+    [SerializeField]
+    private GameObject endVC;
+
     private GameManger gameManager;
     private Enemy enemy;
     private float infectionSpeed = 1f;
     private bool waterInfection = false;
 
+    private PlayableDirector cut;
+    public bool isEnd = false;
+
     void Start()
     {
+        endVC.SetActive(false);
+
+        cut = GetComponent<PlayableDirector>();
         input = GetComponent<StarterAssetsInputs>();
         controller = GetComponent<ThirdPersonController>();
         anim = GetComponent<Animator>();
@@ -126,6 +149,46 @@ public class PlayerManager : MonoBehaviour
 
         hpBar.value = playerCurrentHP / playerMaxHP;
         infectionBar.value = playerCurrentInfection / playerMaxInfection;
+    }
+
+    public void End()
+    {
+        inGameUI.SetActive(false);
+        endVC.SetActive(true);
+        isEnd = true;
+        endFireFX.SetActive(true);
+        this.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+        cut.Play();
+    }
+
+    public void EndScreen()
+    {
+        StartCoroutine(EndGame());
+    }
+
+     IEnumerator EndGame()
+    {
+
+        endBase.SetActive(true);
+
+        // 블러드 스크린을 서서히 나타나게 함
+        while (endImage.color.a < 1.0f)
+        {
+            endImage.color += new Color(0.85f, 0.85f, 0.85f, Time.deltaTime * 0.5f);
+            yield return null;
+        }
+
+        while (endText.color.a < 1.0f)
+        {
+            endText.color += new Color(0.69f, 0.69f, 0.69f, Time.deltaTime * 0.5f);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        endRestartButton.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     IEnumerator PlayerDied()

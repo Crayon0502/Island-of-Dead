@@ -95,7 +95,7 @@ public class PlayerManager : MonoBehaviour
 
     private GameManger gameManager;
     private Enemy enemy;
-    private float infectionSpeed = 1f;
+    private float infectionSpeed = 2f;
     private bool waterInfection = false;
 
     private PlayableDirector cut;
@@ -397,7 +397,7 @@ public class PlayerManager : MonoBehaviour
         if (other.CompareTag("Water"))
         {
             waterInfection = true;
-            infectionSpeed = 4f;
+            infectionSpeed = 2f;
         }
     }
 
